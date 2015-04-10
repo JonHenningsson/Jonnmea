@@ -4,13 +4,12 @@ class Jonnmea:
     def __init__(self, sentence):
         self.sentence = sentence
         self.validTypes = ['GGA', 'RMC']
-        self.listen = self.validTypes
 
     def parseSentence(self):
         # $GPxxx
         self.sentenceType = self.sentence[3:6]
 
-        if self.sentenceType not in self.listen:
+        if self.sentenceType not in self.validTypes:
             msg = "Sentence type '{0}' invalid"
             msg = msg.format(self.sentenceType)
             raise ValueError(msg)
@@ -57,33 +56,6 @@ class Jonnmea:
             return False
 
         return True
-
-    def listen(self, listenTypes):
-        self.listen = []
-
-        if listenTypes == '' or not listenTypes:
-            msg = "No listenType provided, setting default"
-            print(msg)
-            self.listen = self.validTypes
-            return True
-
-        elif listenTypes:
-            listenTypesArr = listenTypes.split(',')
-            
-            for sentenceType in listenTypesArr:
-                if sentenceType not in self.validTypes:
-                    msg = "Sentence type" + sentenceType + " not in valid types. Setting default."
-                    print(msg)
-                    self.listen = self.validTypes
-                    return False
-                
-                else:
-                    msg = "Appending " + sentenceType + " to listenTypes"
-                    print(msg)
-                    self.listen.append(sentenceType)
-
-        return self.listenTypes
-
 
     def sentenceStruct(self, sType):
         structTypes = {}
